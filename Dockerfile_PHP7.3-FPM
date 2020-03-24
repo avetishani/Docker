@@ -5,9 +5,7 @@
 #
 
 # Pull base image
-FROM phalconphp/php:7.0
-
-MAINTAINER Serghei Iakovlev <serghei@phalconphp.com>
+FROM ubuntu:bionic
 
 ENV PHP_MEMORY_LIMIT=512M \
     MAX_UPLOAD=50M \
@@ -20,7 +18,7 @@ RUN apt-get update -y && \
     add-apt-repository -y ppa:ondrej/php && \
     apt-get update -y && \
     mkdir -p /run/php/ && \
-    apt-get install -yq --no-install-suggests --no-install-recommends --force-yes php7.3 php7.3-bcmath php7.3-bz2 php7.3-cli php7.3-common php7.3-curl php7.3-dba php7.3-dev php7.3-gd php7.3-gmp php7.3-imap php7.3-intl php7.3-json php7.3-mbstring php7.3-mysql php7.3-odbc php7.3-opcache php7.3-pgsql php7.3-pspell php7.3-readline php7.3-recode php7.3-soap php7.3-sqlite3 php7.3-tidy php7.3-xml php7.3-xmlrpc php7.3-xsl php7.3-zip php7.3-fpm libmcrypt-dev
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-suggests --no-install-recommends php7.3 php7.3-bcmath php7.3-bz2 php7.3-cli php7.3-common php7.3-curl php7.3-dba php7.3-dev php7.3-gd php7.3-gmp php7.3-imap php7.3-intl php7.3-json php7.3-mbstring php7.3-mysql php7.3-odbc php7.3-opcache php7.3-pgsql php7.3-pspell php7.3-readline php7.3-recode php7.3-soap php7.3-sqlite3 php7.3-tidy php7.3-xml php7.3-xmlrpc php7.3-xsl php7.3-zip php7.3-fpm libmcrypt-dev
 # Tune up PHP FPM
 RUN sed -i -e "s|;catch_workers_output\s*=.*|catch_workers_output = yes|g" /etc/php/7.3/fpm/pool.d/www.conf && \
     sed -i -e "s|^pm.max_children =.*|pm.max_children = 9|g" /etc/php/7.3/fpm/pool.d/www.conf && \
